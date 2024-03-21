@@ -3,3 +3,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.footer-link {
+    @apply text-gray-500 cursor-pointer hover:text-white text-sm transition-colors duration-150;
+}
+
+.navbar-item {
+    @apply text-gray-400 cursor-pointer hover:text-white text-base transition-colors duration-150 h-full flex items-center;
+}
