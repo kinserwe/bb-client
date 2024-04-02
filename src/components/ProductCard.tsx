@@ -4,6 +4,7 @@ import { getImage } from "../firebase.ts";
 import Rating from "@mui/material/Rating";
 import check from "../assets/icons/check.svg";
 import cross from "../assets/icons/cross.svg";
+import { Link } from "react-router-dom";
 
 interface IProductCard {
   product: Product;
@@ -24,7 +25,9 @@ export const ProductCard: FC<IProductCard> = ({ product }) => {
         className="w-[200px] h-[200px] object-contain"
       />
       <div className="flex-1 flex-col">
-        <p className="text-xl font-semibold">{product.name}</p>
+        <Link to={`/products/${product.id}`} className="text-xl font-semibold">
+          {product.name}
+        </Link>
         <div className="pt-2">
           <div className="flex gap-x-4">
             <Rating
@@ -32,6 +35,7 @@ export const ProductCard: FC<IProductCard> = ({ product }) => {
               precision={0.5}
               readOnly
               size="medium"
+              sx={{ zIndex: -100 }}
             />
             <div className="flex gap-x-2 items-center">
               <img

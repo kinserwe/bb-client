@@ -1,4 +1,3 @@
-import searchIcon from "../assets/icons/search.svg";
 import cart from "../assets/icons/cart.svg";
 import map from "../assets/icons/map.svg";
 import { useState } from "react";
@@ -9,6 +8,7 @@ import { RegisterForm } from "./forms/RegisterForm.tsx";
 import { useAppDispatch, useAppSelector } from "../redux/store.ts";
 import { logoutUser } from "../redux/slices/userSlice.ts";
 import { Link } from "react-router-dom";
+import { Searchbar } from "./Searchbar.tsx";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
@@ -61,26 +61,7 @@ export const Header = () => {
       <div className="border-b-1 border-b-gray-100"></div>
       <header className="container h-[100px] flex items-center justify-between">
         <Logo />
-        <form
-          className="w-[500px] h-12 flex relative rounded-md border-1 focus-within:shadow"
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <img
-            src={searchIcon}
-            alt="search"
-            className="h-5 absolute left-3.5 top-3.5"
-          />
-          <input
-            type="text"
-            className="flex-1 pl-10 focus:outline-none rounded-l-md rounded-r-none"
-          />
-          <button
-            type="submit"
-            className="w-25 bg-primary rounded-r-md rounded-l-none text-white hover:bg-hard-primary transition-colors duration-300"
-          >
-            Поиск
-          </button>
-        </form>
+        <Searchbar />
         <div className="flex gap-x-2 items-center cursor-pointer rounded-lg hover:outline-2 hover:border-primary transition-colors duration-300 relative">
           <img src={cart} alt="" className="h-10" />
           {cartSize > 0 && (
@@ -103,9 +84,12 @@ export const Header = () => {
             <Link className="navbar-item" to="/products">
               Все товары
             </Link>
-            <div className="navbar-item">Контакты</div>
-            <div className="navbar-item">О нас</div>
-            <div className="navbar-item">Каталог</div>
+            <Link to="/contacts" className="navbar-item">
+              Контакты
+            </Link>
+            <Link to="/about" className="navbar-item">
+              О нас
+            </Link>
           </div>
           <div className="flex gap-x-2 items-center">
             <img src={phone} alt="phone" />
