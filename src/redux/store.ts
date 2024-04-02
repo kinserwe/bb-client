@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import userReducer from "./slices/userSlice.ts";
 
 export const store = configureStore({
-  reducer: { userReducer },
+  reducer: { user: userReducer },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

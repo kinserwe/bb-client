@@ -1,5 +1,7 @@
 import { Logo } from "./UI/Logo.tsx";
 import phone from "../assets/icons/phone.svg";
+import github from "../assets/icons/github.svg";
+import telegram from "../assets/icons/telegram.svg";
 
 export const Footer = () => {
   return (
@@ -54,10 +56,21 @@ export const Footer = () => {
           <p className="text-gray-500 text-sm">
             BotanicBasket &copy; {new Date().getFullYear()}. Все права защищены
           </p>
-          <div className="flex items-center justify-between gap-x-2">
-            <img src="" alt="" />
-            <img src="" alt="" />
-            <img src="" alt="" />
+          <div className="flex items-center justify-between gap-x-3">
+            <a href="https://t.me/wiarale" target="_blank">
+              <img
+                src={telegram}
+                alt="telegram icon"
+                className="h-[32px] w-[32px] cursor-pointer"
+              />
+            </a>
+            <a href="https://github.com/kinserwe/bb-client" target="_blank">
+              <img
+                src={github}
+                alt="github icon"
+                className="h-[32px] w-[32px] cursor-pointer"
+              />
+            </a>
           </div>
         </div>
       </div>

@@ -9,5 +9,9 @@
 }
 
 .navbar-item {
-    @apply text-gray-400 cursor-pointer hover:text-white text-base transition-colors duration-150 h-full flex items-center;
+    @apply text-white cursor-pointer hover:text-white text-base transition-colors duration-150 h-full flex items-center;
+}
+
+.auth-form-input {
+    @apply p-4 rounded-md border-1 w-[400px] focus:outline-none;
 }

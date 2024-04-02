@@ -5,10 +5,35 @@ import { useState } from "react";
 import { Logo } from "./UI/Logo.tsx";
 import phone from "../assets/icons/phone.svg";
 import { LoginForm } from "./forms/LoginForm.tsx";
+import { RegisterForm } from "./forms/RegisterForm.tsx";
+import { useAppDispatch, useAppSelector } from "../redux/store.ts";
+import { logoutUser } from "../redux/slices/userSlice.ts";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector((state) => state.user.isAuth);
   const [cartSize] = useState<number>(0);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [registerModalOpen, setRegisterModalOpen] = useState<boolean>(false);
+
+  const openLoginModal = () => {
+    setLoginModalOpen(true);
+    setRegisterModalOpen(false);
+  };
+
+  const openRegisterModal = () => {
+    setRegisterModalOpen(true);
+    setLoginModalOpen(false);
+  };
+
+  const closeLoginModal = () => {
+    setLoginModalOpen(false);
+  };
+
+  const closeRegisterModal = () => {
+    setRegisterModalOpen(false);
+  };
 
   return (
     <>
@@ -17,12 +42,21 @@ export const Header = () => {
           <img src={map} alt="map" className="fill-gray-600" />
           <p>Минск, ул. Казинца, 91</p>
         </div>
-        <p
-          className="hover:underline hover:underline-offset-4 cursor-pointer"
-          onClick={() => setLoginModalOpen(true)}
-        >
-          Войти / Зарегистрироваться
-        </p>
+        {!isAuth ? (
+          <p
+            className="hover:underline hover:underline-offset-4 cursor-pointer"
+            onClick={() => setLoginModalOpen(true)}
+          >
+            Войти / Зарегистрироваться
+          </p>
+        ) : (
+          <p
+            className="hover:underline hover:underline-offset-4 cursor-pointer"
+            onClick={() => dispatch(logoutUser())}
+          >
+            Выйти из аккаунта
+          </p>
+        )}
       </div>
       <div className="border-b-1 border-b-gray-100"></div>
       <header className="container h-[100px] flex items-center justify-between">
@@ -63,8 +97,12 @@ export const Header = () => {
       <div className="bg-gray-800">
         <nav className="container flex justify-between items-center h-[60px]">
           <div className="flex gap-x-10 h-full select-none">
-            <div className="navbar-item">Каталог</div>
-            <div className="navbar-item">Все товары</div>
+            <Link className="navbar-item" to="/catalog">
+              Каталог
+            </Link>
+            <Link className="navbar-item" to="/products">
+              Все товары
+            </Link>
             <div className="navbar-item">Контакты</div>
             <div className="navbar-item">О нас</div>
             <div className="navbar-item">Каталог</div>
@@ -80,7 +118,16 @@ export const Header = () => {
           </div>
         </nav>
       </div>
-      <LoginForm isOpen={loginModalOpen} setIsOpen={setLoginModalOpen} />
+      <LoginForm
+        isOpen={loginModalOpen}
+        setIsOpen={closeLoginModal}
+        openRegisterModal={openRegisterModal}
+      />
+      <RegisterForm
+        isOpen={registerModalOpen}
+        setIsOpen={closeRegisterModal}
+        openLoginModal={openLoginModal}
+      />
     </>
   );
 };

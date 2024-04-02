@@ -1,7 +1,8 @@
-import { LoginCredentials, User } from "../../types.ts";
+import { LoginCredentials, RegisterData, User } from "../../types.ts";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apiClient from "../../axios.ts";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 interface UserState {
   isAuth: boolean;
@@ -26,6 +27,22 @@ export const loginUser = createAsyncThunk<
     const { data } = await apiClient.post<User>("auth/login", credentials);
     return data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.data.error) {
+      return rejectWithValue(error.response.data.error);
+    } else {
+      return rejectWithValue("Неизвестная ошибка");
+    }
+  }
+});
+
+export const registerUser = createAsyncThunk<
+  void,
+  RegisterData,
+  { rejectValue: string }
+>("user/register", async (data, { rejectWithValue }) => {
+  try {
+    await apiClient.post<void>("auth/register", data);
+  } catch (error) {
     if (error instanceof AxiosError) {
       return rejectWithValue(error.response?.data.error);
     } else {
@@ -33,6 +50,38 @@ export const loginUser = createAsyncThunk<
     }
   }
 });
+
+export const fetchProfile = createAsyncThunk<
+  User,
+  void,
+  { rejectValue: string }
+>("user/profile", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await apiClient.get<User>("auth/users/me");
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return rejectWithValue(error.response?.data.error);
+    } else {
+      return rejectWithValue("Неизвестная ошибка");
+    }
+  }
+});
+
+export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
+  "user/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await apiClient.post<User>("auth/logout");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data.error);
+      } else {
+        return rejectWithValue("Неизвестная ошибка");
+      }
+    }
+  },
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -43,11 +92,49 @@ const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
+      state.isAuth = true;
       state.data = action.payload;
       state.loading = false;
-      state.isAuth = true;
+      toast.success(`Добро пожаловать, ${action.payload.first_name}!`, {
+        position: "top-center",
+        autoClose: 2000,
+      });
     });
     builder.addCase(loginUser.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(registerUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(registerUser.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(registerUser.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(fetchProfile.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProfile.fulfilled, (state, action) => {
+      state.isAuth = true;
+      state.data = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(fetchProfile.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(logoutUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      state.data = null;
+      state.isAuth = false;
+      state.loading = false;
+    });
+    builder.addCase(logoutUser.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
     });
