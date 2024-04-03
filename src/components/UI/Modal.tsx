@@ -8,15 +8,10 @@ interface IModal {
   className?: string;
 }
 
-export const Modal: FC<IModal> = ({
-  children,
-  isOpen,
-  setIsOpen,
-  className,
-}) => {
+export const Modal: FC<IModal> = ({ children, isOpen, setIsOpen }) => {
   return (
     <div
-      className={`inset-0 fixed bg-green-800 bg-opacity-25 z-100 ${isOpen ? "flex items-center justify-center" : "hidden"} ${className}`}
+      className={`inset-0 fixed bg-green-800 bg-opacity-25 z-100 ${isOpen ? "flex items-center justify-center" : "hidden"}`}
       onClick={() => setIsOpen(false)}
     >
       <div

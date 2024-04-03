@@ -11,7 +11,6 @@ export default {
         primary: "#00B207",
         "hard-primary": "#2C742F",
         gray: {
-          50: "#F2F2F2",
           500: "#808080",
           800: "#333333",
           900: "#1A1A1A",

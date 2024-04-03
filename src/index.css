@@ -15,3 +15,7 @@
 .auth-form-input {
     @apply p-4 rounded-md border-1 w-[400px] focus:outline-none;
 }
+
+.underline-hover {
+    @apply hover:underline hover:underline-offset-4
+}

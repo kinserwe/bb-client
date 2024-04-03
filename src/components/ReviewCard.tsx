@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Review } from "../types.ts";
 import quote from "../assets/icons/quote.svg";
 import { Link } from "react-router-dom";
-import defaultUserImage from "../assets/icons/default_user.svg";
+import defaultUserImage from "../assets/images/default_user.png";
 import Rating from "@mui/material/Rating";
 import { getImage } from "../firebase.ts";
 
@@ -21,7 +21,7 @@ export const ReviewCard: FC<IReviewCard> = ({ review }) => {
       <img src={quote} alt="quote" className="absolute top-6 left-6" />
       <p className="flex-1">{review.text}</p>
       <Link
-        className="text-sm text-gray-700 hover:underline hover:underline-offset-4"
+        className="text-sm text-gray-700 underline-hover"
         to={`/products/${review.product.id}`}
       >
         {review.product.name}`

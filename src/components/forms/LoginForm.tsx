@@ -18,11 +18,14 @@ export const LoginForm: FC<ILoginForm> = ({
   openRegisterModal,
 }) => {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<LoginCredentials>();
+  const { register, handleSubmit, reset } = useForm<LoginCredentials>();
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
   const submitForm = async (data: LoginCredentials) => {
-    dispatch(loginUser(data));
+    dispatch(loginUser(data)).then(() => {
+      reset();
+      setIsOpen(false);
+    });
   };
 
   return (
@@ -61,7 +64,7 @@ export const LoginForm: FC<ILoginForm> = ({
         <p className="text-center text-gray-600 mt-4">
           Нет аккаунта?{" "}
           <span
-            className="font-medium text-gray-900 hover:underline hover:underline-offset-4 cursor-pointer"
+            className="font-medium text-gray-900 underline-hover cursor-pointer"
             onClick={openRegisterModal}
           >
             Зарегистрироваться

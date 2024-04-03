@@ -26,7 +26,9 @@ export const HomePage = () => {
       <section className="bg-gray-50 py-[60px] mt-[60px] w-full">
         <p className="container text-3xl font-semibold">Последние отзывы</p>
         <div className="container grid grid-cols-3 grid-rows-1 gap-4 mb-4 pt-9">
-          {latestReviews?.map((review) => <ReviewCard review={review} />)}
+          {latestReviews?.map((review) => (
+            <ReviewCard key={review.id} review={review} />
+          ))}
         </div>
       </section>
     </>

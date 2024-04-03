@@ -1,5 +1,5 @@
 import searchIcon from "../assets/icons/search.svg";
-import { SearchResult } from "./SearchResult.tsx";
+import { SearchResults } from "./SearchResults.tsx";
 import React, { useEffect, useState } from "react";
 import { Product } from "../types.ts";
 import apiClient from "../axios.ts";
@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 export const Searchbar = () => {
   const [resultOpen, setResultOpen] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [results, setResults] = useState<Product[]>();
+  const [results, setResults] = useState<Product[]>([]);
   const location = useLocation();
 
   const fetchResults = async () => {
@@ -28,7 +28,7 @@ export const Searchbar = () => {
   }, [location]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 2) {
+    if (e.target.value.length > 1) {
       setSearchValue(e.target.value);
       setResultOpen(true);
     } else {
@@ -61,7 +61,7 @@ export const Searchbar = () => {
         {/*>*/}
         {/*  Поиск*/}
         {/*</button>*/}
-        <SearchResult results={results} isOpen={resultOpen} />
+        <SearchResults results={results} isOpen={resultOpen} />
       </form>
     </>
   );

@@ -16,10 +16,7 @@ export const Footer = () => {
             </p>
             <div className="flex gap-x-2">
               <img src={phone} alt="phone" />
-              <a
-                href="tel:+375(29)123-45-67"
-                className="hover:underline hover:underline-offset-4"
-              >
+              <a href="tel:+375(29)123-45-67" className="underline-hover">
                 +375 (29) 123-45-67
               </a>
             </div>

@@ -1,5 +1,6 @@
 import cart from "../assets/icons/cart.svg";
 import map from "../assets/icons/map.svg";
+import profile from "../assets/icons/user.svg";
 import { useState } from "react";
 import { Logo } from "./UI/Logo.tsx";
 import phone from "../assets/icons/phone.svg";
@@ -44,14 +45,14 @@ export const Header = () => {
         </div>
         {!isAuth ? (
           <p
-            className="hover:underline hover:underline-offset-4 cursor-pointer"
+            className="underline-hover cursor-pointer"
             onClick={() => setLoginModalOpen(true)}
           >
             Войти / Зарегистрироваться
           </p>
         ) : (
           <p
-            className="hover:underline hover:underline-offset-4 cursor-pointer"
+            className="underline-hover cursor-pointer"
             onClick={() => dispatch(logoutUser())}
           >
             Выйти из аккаунта
@@ -62,17 +63,24 @@ export const Header = () => {
       <header className="container h-[100px] flex items-center justify-between">
         <Logo />
         <Searchbar />
-        <div className="flex gap-x-2 items-center cursor-pointer rounded-lg hover:outline-2 hover:border-primary transition-colors duration-300 relative">
-          <img src={cart} alt="" className="h-10" />
+        <div className="flex gap-x-2 items-center rounded-lg hover:outline-2 hover:border-primary transition-colors duration-300 relative">
+          {isAuth && (
+            <Link to="/profile">
+              <img src={profile} alt="" className="h-10 cursor-pointer" />
+            </Link>
+          )}
           {cartSize > 0 && (
             <div className="text-sm rounded-3xl h-5 w-5 text-white flex items-center justify-center bg-hard-primary absolute top-1 right-[75px]">
               {cartSize}
             </div>
           )}
-          <div className="flex flex-col justify-between font-semibold">
-            <p className="text-gray-600">Корзина</p>
-            <div>0.00BYN</div>
-          </div>
+          <Link to="/cart" className="flex gap-x-2 items-center font-semibold">
+            <img src={cart} alt="" className="h-10 cursor-pointer" />
+            <div className="flex-col justify-between">
+              <p className="text-gray-600">Корзина</p>
+              <div>0.00BYN</div>
+            </div>
+          </Link>
         </div>
       </header>
       <div className="bg-gray-800">
@@ -94,7 +102,7 @@ export const Header = () => {
           <div className="flex gap-x-2 items-center">
             <img src={phone} alt="phone" />
             <a
-              className="py-0.5 text-white hover:underline hover:underline-offset-4"
+              className="py-0.5 text-white underline-hover"
               href="tel:+375 (29) 123-45-67"
             >
               +375 (29) 123-45-67

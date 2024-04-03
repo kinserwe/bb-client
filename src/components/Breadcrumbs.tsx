@@ -9,6 +9,11 @@ enum routeMapping {
   "products" = "Все товары",
   "contacts" = "Контакты",
   "catalog" = "Каталог",
+  "profile" = "Профиль",
+  "cart" = "Корзина",
+  "wishlist" = "Список желаемого",
+  "dashboard" = "Личный кабинет",
+  "order-history" = "История заказов",
 }
 
 function Breadcrumbs() {
@@ -24,7 +29,10 @@ function Breadcrumbs() {
       <ol className="flex items-center space-x-4">
         <li>
           <div>
-            <Link to="/" className="text-gray-400 hover:text-gray-500">
+            <Link
+              to="/"
+              className="text-gray-400 hover:filter hover:brightness-0"
+            >
               <img src={home} alt="home icon" />
             </Link>
           </div>

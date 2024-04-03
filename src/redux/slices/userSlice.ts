@@ -133,6 +133,10 @@ const userSlice = createSlice({
       state.data = null;
       state.isAuth = false;
       state.loading = false;
+      toast.info("Вы вышли из аккаунта", {
+        position: "top-center",
+        autoClose: 2000,
+      });
     });
     builder.addCase(logoutUser.rejected, (state, action) => {
       state.error = action.payload;

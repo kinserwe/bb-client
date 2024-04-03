@@ -82,7 +82,7 @@ export const RegisterForm: FC<IRegisterForm> = ({
         <p className="text-center text-gray-600 mt-4">
           Уже зарегистрированы?{" "}
           <span
-            className="font-medium text-gray-900 hover:underline hover:underline-offset-4 cursor-pointer"
+            className="font-medium text-gray-900 underline-hover cursor-pointer"
             onClick={openLoginModal}
           >
             Войти
