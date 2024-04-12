@@ -2,15 +2,14 @@ import { Product } from "../types.ts";
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import check from "../assets/icons/check.svg";
-import cross from "../assets/icons/cross.svg";
 import { getImage } from "../firebase.ts";
+import ProductStatus from "./UI/ProductStatus.tsx";
 
 interface ISearchResult {
   result: Product;
 }
 
-export const SearchResult: FC<ISearchResult> = ({ result }) => {
+const SearchResult: FC<ISearchResult> = ({ result }) => {
   const [image, setImage] = useState<string>();
 
   useEffect(() => {
@@ -18,18 +17,18 @@ export const SearchResult: FC<ISearchResult> = ({ result }) => {
   }, []);
 
   return (
-    <div className="p-4 flex border-1 rounded-lg border-gray-200 gap-x-3">
+    <div className="flex gap-x-3 rounded-lg border-1 border-gray-200 p-4">
       <div className="flex items-center">
         <img
           src={image}
           alt="product image"
-          className="w-[100px] h-[100px] object-contain"
+          className="h-[100px] w-[100px] object-contain"
         />
       </div>
       <div className="flex-1 flex-col">
         <Link
-          to={`/products/${result.id}`}
-          className="text-base font-semibold underline-hover"
+          to={`/catalog/${result.category}/${result.id}`}
+          className="underline-hover text-base font-semibold"
         >
           {result.name}
         </Link>
@@ -40,32 +39,25 @@ export const SearchResult: FC<ISearchResult> = ({ result }) => {
               precision={0.5}
               readOnly
               size="small"
-              className="z-[-100] pb-0 items-center"
+              className="z-[-100] items-center pb-0"
             />
-            <div className="flex gap-x-2 items-center">
-              <img
-                src={result.quantity ? check : cross}
-                alt="check"
-                className="h-4"
-              />
-              <span className="text-gray-800 text-sm    ">
-                {result.quantity ? "Есть в наличии" : "Нет в наличии"}
-              </span>
-            </div>
+            <ProductStatus productQuantity={result.quantity} />
           </div>
         </div>
-        <p className="pt-2 text-gray-600 text-[13px] whitespace-pre-wrap">
+        <p className="whitespace-pre-wrap pt-2 text-[13px] text-gray-600">
           {result.description}
         </p>
       </div>
-      <div className="w-[120px] flex flex-col gap-y-3">
-        <p className="text-base text-right font-semibold">
+      <div className="flex w-[120px] flex-col gap-y-3">
+        <p className="text-right text-base font-semibold">
           {result.price} руб.
         </p>
-        <button className="text-white py-1.5 px-2.5 bg-primary hover:bg-hard-primary rounded-md transition-colors duration-300">
+        <button className="rounded-md bg-primary px-2.5 py-1.5 text-white transition-colors duration-200 hover:bg-hard-primary">
           В корзину
         </button>
       </div>
     </div>
   );
 };
+
+export default SearchResult;

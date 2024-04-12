@@ -1,14 +1,11 @@
-import { FC } from "react";
-import React from "react";
+import React, { FC } from "react";
 
 interface IMain {
   children: React.ReactNode;
 }
 
-export const Main: FC<IMain> = ({ children }) => {
-  return (
-    <main className="flex flex-col flex-1 items-center justify-center">
-      {children}
-    </main>
-  );
+const Main: FC<IMain> = ({ children }) => {
+  return <main className="flex flex-1 flex-col items-center">{children}</main>;
 };
+
+export default Main;

@@ -9,7 +9,7 @@ import { getImage } from "../firebase.ts";
 interface IReviewCard {
   review: Review;
 }
-export const ReviewCard: FC<IReviewCard> = ({ review }) => {
+const ReviewCard: FC<IReviewCard> = ({ review }) => {
   const [userImage, setUserImage] = useState<string>();
 
   useEffect(() => {
@@ -17,11 +17,11 @@ export const ReviewCard: FC<IReviewCard> = ({ review }) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-y-6 p-6 bg-white rounded-lg pt-[64px] relative">
-      <img src={quote} alt="quote" className="absolute top-6 left-6" />
+    <div className="relative flex flex-col gap-y-6 rounded-lg bg-white p-6 pt-[64px]">
+      <img src={quote} alt="quote" className="absolute left-6 top-6" />
       <p className="flex-1">{review.text}</p>
       <Link
-        className="text-sm text-gray-700 underline-hover"
+        className="underline-hover text-sm text-gray-700"
         to={`/products/${review.product.id}`}
       >
         {review.product.name}`
@@ -47,3 +47,5 @@ export const ReviewCard: FC<IReviewCard> = ({ review }) => {
     </div>
   );
 };
+
+export default ReviewCard;

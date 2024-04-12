@@ -83,6 +83,22 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
   },
 );
 
+export const updateUser = createAsyncThunk<User, User, { rejectValue: string }>(
+  "user/update",
+  async (updateData, { rejectWithValue }) => {
+    try {
+      const { data } = await apiClient.patch<User>("auth/users/me", updateData);
+      return data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data.error);
+      } else {
+        return rejectWithValue("Неизвестная ошибка");
+      }
+    }
+  },
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -141,6 +157,21 @@ const userSlice = createSlice({
     builder.addCase(logoutUser.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
+    });
+    builder.addCase(updateUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.data = action.payload;
+      state.loading = false;
+      toast.success("Изменения сохранены", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+    });
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     });
   },
 });

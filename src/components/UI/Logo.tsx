@@ -1,11 +1,13 @@
 import logo from "../../assets/icons/logo.svg";
 import { Link } from "react-router-dom";
 
-export const Logo = () => {
+const Logo = () => {
   return (
-    <Link className="flex gap-x-2 h-8 cursor-pointer" to="/">
+    <Link className="flex h-8 cursor-pointer gap-x-2" to="/">
       <img src={logo} alt="logo" />
-      <div className="text-2xl select-none">BotanicBasket</div>
+      <div className="select-none text-2xl">BotanicBasket</div>
     </Link>
   );
 };
+
+export default Logo;

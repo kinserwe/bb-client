@@ -1,21 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .footer-link {
-    @apply text-gray-500 cursor-pointer hover:text-white text-sm transition-colors duration-150;
+  @apply cursor-pointer text-sm text-gray-500 transition-colors duration-150 hover:text-white;
 }
 
 .navbar-item {
-    @apply text-white cursor-pointer hover:text-white text-base transition-colors duration-150 h-full flex items-center;
+  @apply flex h-full cursor-pointer items-center text-base text-white transition-colors duration-150 hover:text-white;
 }
 
-.auth-form-input {
-    @apply p-4 rounded-md border-1 w-[400px] focus:outline-none;
+.form-input {
+  @apply w-full rounded-md border-1 p-4 focus:outline-none;
 }
 
 .underline-hover {
-    @apply hover:underline hover:underline-offset-4
+  @apply hover:underline hover:underline-offset-4;
 }

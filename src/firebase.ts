@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { ref, getStorage, getDownloadURL, uploadBytes } from "firebase/storage";
-import { toast } from "react-toastify";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -18,12 +17,11 @@ export const getImage = async (location: string) => {
   return await getDownloadURL(ref(storage, location));
 };
 
-export const uploadImage = (image: File, location: string) => {
+export const uploadImage = async (
+  image: File,
+  location: string,
+): Promise<string> => {
   const imageRef = ref(storage, location);
-  uploadBytes(imageRef, image).then(() =>
-    toast.success("Изображение добавлено!", {
-      position: "top-center",
-      autoClose: 2000,
-    }),
-  );
+  await uploadBytes(imageRef, image);
+  return await getDownloadURL(imageRef);
 };

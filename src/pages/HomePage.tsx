@@ -1,11 +1,11 @@
-import { Gallery } from "../components/Gallery.tsx";
-import { Featured } from "../components/Featured.tsx";
+import Gallery from "../components/Gallery.tsx";
+import Featured from "../components/Featured.tsx";
 import { useEffect, useState } from "react";
 import { Review } from "../types.ts";
 import apiClient from "../axios.ts";
-import { ReviewCard } from "../components/ReviewCard.tsx";
+import ReviewCard from "../components/ReviewCard.tsx";
 
-export const HomePage = () => {
+const HomePage = () => {
   const [latestReviews, setLatestReviews] = useState<Review[]>();
 
   const fetchLatestReviews = async () => {
@@ -23,9 +23,9 @@ export const HomePage = () => {
     <>
       <Gallery />
       <Featured />
-      <section className="bg-gray-50 py-[60px] mt-[60px] w-full">
+      <section className="mt-[60px] w-full bg-gray-50 py-[60px]">
         <p className="container text-3xl font-semibold">Последние отзывы</p>
-        <div className="container grid grid-cols-3 grid-rows-1 gap-4 mb-4 pt-9">
+        <div className="container mb-4 grid grid-cols-3 grid-rows-1 gap-4 pt-9">
           {latestReviews?.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
@@ -34,3 +34,5 @@ export const HomePage = () => {
     </>
   );
 };
+
+export default HomePage;

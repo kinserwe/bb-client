@@ -1,3 +1,5 @@
+import plugin from "tailwindcss/plugin.js";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
@@ -8,8 +10,8 @@ export default {
       },
       colors: {
         "soft-primary": "#84D187",
-        primary: "#00B207",
-        "hard-primary": "#2C742F",
+        primary: "#007207",
+        "hard-primary": "#245e26",
         gray: {
           500: "#808080",
           800: "#333333",
@@ -29,6 +31,21 @@ export default {
         25: "100px",
       },
     },
+    container: {
+      center: true,
+      padding: "1rem",
+      screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1440px",
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant("not-last", "&:not(:last-child)");
+    }),
+  ],
 };

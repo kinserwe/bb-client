@@ -2,16 +2,16 @@ import cart from "../assets/icons/cart.svg";
 import map from "../assets/icons/map.svg";
 import profile from "../assets/icons/user.svg";
 import { useState } from "react";
-import { Logo } from "./UI/Logo.tsx";
+import Logo from "./UI/Logo.tsx";
 import phone from "../assets/icons/phone.svg";
-import { LoginForm } from "./forms/LoginForm.tsx";
-import { RegisterForm } from "./forms/RegisterForm.tsx";
+import LoginForm from "./forms/LoginForm.tsx";
+import RegisterForm from "./forms/RegisterForm.tsx";
 import { useAppDispatch, useAppSelector } from "../redux/store.ts";
 import { logoutUser } from "../redux/slices/userSlice.ts";
 import { Link } from "react-router-dom";
-import { Searchbar } from "./Searchbar.tsx";
+import Searchbar from "./Searchbar.tsx";
 
-export const Header = () => {
+const Header = () => {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((state) => state.user.isAuth);
   const [cartSize] = useState<number>(0);
@@ -38,7 +38,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="container h-11 flex items-center justify-between text-sm text-gray-600">
+      <div className="container flex h-11 items-center justify-between text-sm text-gray-600">
         <div className="flex gap-x-2">
           <img src={map} alt="map" className="fill-gray-600" />
           <p>Минск, ул. Казинца, 91</p>
@@ -60,21 +60,24 @@ export const Header = () => {
         )}
       </div>
       <div className="border-b-1 border-b-gray-100"></div>
-      <header className="container h-[100px] flex items-center justify-between">
+      <header className="container flex h-[100px] items-center justify-between">
         <Logo />
         <Searchbar />
-        <div className="flex gap-x-2 items-center rounded-lg hover:outline-2 hover:border-primary transition-colors duration-300 relative">
+        <div className="relative flex items-center gap-x-2 rounded-lg transition-colors duration-200 hover:border-primary hover:outline-2">
           {isAuth && (
-            <Link to="/profile">
+            <Link to="/profile/dashboard">
               <img src={profile} alt="" className="h-10 cursor-pointer" />
             </Link>
           )}
           {cartSize > 0 && (
-            <div className="text-sm rounded-3xl h-5 w-5 text-white flex items-center justify-center bg-hard-primary absolute top-1 right-[75px]">
+            <div className="absolute right-[75px] top-1 flex h-5 w-5 items-center justify-center rounded-3xl bg-hard-primary text-sm text-white">
               {cartSize}
             </div>
           )}
-          <Link to="/cart" className="flex gap-x-2 items-center font-semibold">
+          <Link
+            to="/profile/cart"
+            className="flex items-center gap-x-2 font-semibold"
+          >
             <img src={cart} alt="" className="h-10 cursor-pointer" />
             <div className="flex-col justify-between">
               <p className="text-gray-600">Корзина</p>
@@ -84,13 +87,10 @@ export const Header = () => {
         </div>
       </header>
       <div className="bg-gray-800">
-        <nav className="container flex justify-between items-center h-[60px]">
-          <div className="flex gap-x-10 h-full select-none">
+        <nav className="container flex h-[60px] items-center justify-between">
+          <div className="flex h-full select-none gap-x-10">
             <Link className="navbar-item" to="/catalog">
               Каталог
-            </Link>
-            <Link className="navbar-item" to="/products">
-              Все товары
             </Link>
             <Link to="/contacts" className="navbar-item">
               Контакты
@@ -99,10 +99,10 @@ export const Header = () => {
               О нас
             </Link>
           </div>
-          <div className="flex gap-x-2 items-center">
+          <div className="flex items-center gap-x-2">
             <img src={phone} alt="phone" />
             <a
-              className="py-0.5 text-white underline-hover"
+              className="underline-hover py-0.5 text-white"
               href="tel:+375 (29) 123-45-67"
             >
               +375 (29) 123-45-67
@@ -123,3 +123,5 @@ export const Header = () => {
     </>
   );
 };
+
+export default Header;

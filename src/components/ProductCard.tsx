@@ -1,16 +1,16 @@
 import { Product } from "../types.ts";
 import { FC, useEffect, useState } from "react";
 import { getImage } from "../firebase.ts";
-import Rating from "@mui/material/Rating";
-import check from "../assets/icons/check.svg";
-import cross from "../assets/icons/cross.svg";
 import { Link } from "react-router-dom";
+import ProductStatus from "./UI/ProductStatus.tsx";
+import Rating from "./UI/Rating.tsx";
+import green_heart from "../assets/icons/green_heart.svg";
 
 interface IProductCard {
   product: Product;
 }
 
-export const ProductCard: FC<IProductCard> = ({ product }) => {
+const ProductCard: FC<IProductCard> = ({ product }) => {
   const [image, setImage] = useState<string>();
 
   useEffect(() => {
@@ -18,47 +18,48 @@ export const ProductCard: FC<IProductCard> = ({ product }) => {
   }, []);
 
   return (
-    <div className="p-5 flex border-1 rounded-lg border-gray-200 gap-x-4">
-      <img
-        src={image}
-        alt="product image"
-        className="w-[200px] h-[200px] object-contain"
-      />
+    <div className="flex gap-x-4 rounded-lg border-1 border-gray-200 p-5">
+      <Link to={`/products/${product.id}`}>
+        <img
+          src={image}
+          alt="product image"
+          className="h-[200px] w-[200px] object-contain"
+        />
+      </Link>
+
       <div className="flex-1 flex-col">
-        <Link to={`/products/${product.id}`} className="text-xl font-semibold">
+        <Link
+          to={`${product.parent_category}/${product.category}/${product.id}`}
+          className="underline-hover text-xl font-semibold"
+        >
           {product.name}
         </Link>
         <div className="pt-2">
           <div className="flex gap-x-4">
-            <Rating
-              defaultValue={product.rating}
-              precision={0.5}
-              readOnly
-              size="medium"
-              sx={{ zIndex: -100 }}
-            />
-            <div className="flex gap-x-2 items-center">
-              <img
-                src={product.quantity ? check : cross}
-                alt="check"
-                className="h-4"
-              />
-              <span className="text-gray-800">
-                {product.quantity ? "Есть в наличии" : "Нет в наличии"}
-              </span>
+            <div className="flex gap-x-1">
+              <Rating value={product?.rating} />
+              <span>({product?.review_count})</span>
             </div>
+            <ProductStatus productQuantity={product.quantity} />
           </div>
         </div>
-        <p className="pt-2 text-gray-600 text-sm whitespace-pre-wrap">
+        <p className="whitespace-pre-wrap pt-2 text-sm text-gray-600">
           {product.description}
         </p>
       </div>
-      <div className="w-[240px] flex flex-col gap-y-3">
+      <div className="flex w-[240px] flex-col gap-y-3">
         <p className="text-lg font-semibold">{product.price} руб.</p>
-        <button className="text-white py-2.5 px-5 bg-primary hover:bg-hard-primary rounded-md transition-colors duration-300">
-          В корзину
-        </button>
+        <div className="flex items-center gap-x-3">
+          <button className="flex-1 rounded-md bg-primary px-5 py-2.5 text-white transition-colors duration-200 hover:bg-hard-primary">
+            В корзину
+          </button>
+          <button className="flex h-[44px] w-[44px] items-center justify-center rounded-[50%] bg-[#20B256]/20 transition-colors duration-200 hover:bg-[#20B256]/40">
+            <img src={green_heart} alt="" className="h-5 w-5" />
+          </button>
+        </div>
       </div>
     </div>
   );
 };
+
+export default ProductCard;

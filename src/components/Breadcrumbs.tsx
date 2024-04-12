@@ -1,6 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { UisAngleRight } from "@iconscout/react-unicons-solid";
 import home from "../assets/icons/home.svg";
+import { useEffect, useState } from "react";
+import apiClient from "../axios.ts";
+import { Product } from "../types.ts";
 
 type RouteKey = keyof typeof routeMapping;
 
@@ -13,11 +16,21 @@ enum routeMapping {
   "cart" = "Корзина",
   "wishlist" = "Список желаемого",
   "dashboard" = "Личный кабинет",
-  "order-history" = "История заказов",
+  "orders" = "История заказов",
+  "settings" = "Настройки",
 }
 
-function Breadcrumbs() {
+const Breadcrumbs = () => {
   const location = useLocation();
+  const { productId } = useParams();
+  const [productName, setProductName] = useState<string>("");
+
+  useEffect(() => {
+    if (productId)
+      apiClient
+        .get<Product>(`api/products/${productId}`)
+        .then(({ data }) => setProductName(data.name));
+  }, [productId]);
 
   if (location.pathname === "/") {
     return null;
@@ -25,13 +38,13 @@ function Breadcrumbs() {
 
   const paths = location.pathname.split("/").filter((path) => path);
   return (
-    <nav className="flex container py-8">
+    <nav className="container flex py-8">
       <ol className="flex items-center space-x-4">
         <li>
           <div>
             <Link
               to="/"
-              className="text-gray-400 hover:filter hover:brightness-0"
+              className="text-gray-400 hover:brightness-0 hover:filter"
             >
               <img src={home} alt="home icon" />
             </Link>
@@ -40,8 +53,16 @@ function Breadcrumbs() {
         {paths.map((path, index) => {
           const pathParts = paths.slice(0, index + 1);
           const to = `/${pathParts.join("/")}`;
-          const displayName =
-            path in routeMapping ? routeMapping[path as RouteKey] : path;
+          let displayName = decodeURIComponent(
+            path in routeMapping ? routeMapping[path as RouteKey] : path,
+          );
+          if (
+            paths.includes("catalog") &&
+            productId &&
+            index === paths.length - 1
+          ) {
+            displayName = productName;
+          }
           return (
             <li key={to}>
               <div className="flex items-center">
@@ -60,6 +81,6 @@ function Breadcrumbs() {
       </ol>
     </nav>
   );
-}
+};
 
 export default Breadcrumbs;

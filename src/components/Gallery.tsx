@@ -2,24 +2,26 @@ import tools from "../assets/images/tools.jpg";
 import seeds from "../assets/images/seeds.jpg";
 import besedka from "../assets/images/besedka.jpg";
 
-export const Gallery = () => {
+const Gallery = () => {
   return (
-    <div className="container grid grid-cols-3 grid-rows-2 gap-6 my-6">
+    <div className="container my-6 grid grid-cols-3 grid-rows-2 gap-6">
       <img
         src={tools}
         alt="garden tools"
-        className="col-span-2 row-span-2 w-full h-full object-cover rounded-3xl hover:scale-[1.002] transition-transform duration-150 cursor-pointer"
+        className="col-span-2 row-span-2 h-full w-full cursor-pointer rounded-3xl object-cover transition-transform duration-150 hover:scale-[1.002]"
       />
       <img
         src={seeds}
         alt="seeds"
-        className="col-span-1 row-span-1 w-full h-full object-cover rounded-3xl hover:scale-[1.005] transition-transform duration-150 cursor-pointer"
+        className="col-span-1 row-span-1 h-full w-full cursor-pointer rounded-3xl object-cover transition-transform duration-150 hover:scale-[1.005]"
       />
       <img
         src={besedka}
         alt="besedka"
-        className="col-span-1 row-span-1 w-full h-full object-cover rounded-3xl hover:scale-[1.005] transition-transform duration-150 cursor-pointer"
+        className="col-span-1 row-span-1 h-full w-full cursor-pointer rounded-3xl object-cover transition-transform duration-150 hover:scale-[1.005]"
       />
     </div>
   );
 };
+
+export default Gallery;

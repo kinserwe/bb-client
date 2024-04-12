@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Modal } from "../UI/Modal.tsx";
+import Modal from "../UI/Modal.tsx";
 import { useForm } from "react-hook-form";
 import { LoginCredentials } from "../../types.ts";
 import { useAppDispatch } from "../../redux/store.ts";
@@ -12,7 +12,7 @@ interface ILoginForm {
   openRegisterModal: () => void;
 }
 
-export const LoginForm: FC<ILoginForm> = ({
+const LoginForm: FC<ILoginForm> = ({
   isOpen,
   setIsOpen,
   openRegisterModal,
@@ -31,40 +31,40 @@ export const LoginForm: FC<ILoginForm> = ({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <form
-        className="flex flex-col justify-center items-center gap-3 p-6"
+        className="flex flex-col items-center justify-center gap-3 p-6"
         onSubmit={handleSubmit(submitForm)}
       >
-        <p className="text-3xl font-semibold mb-2">Вход</p>
+        <p className="mb-2 text-3xl font-semibold">Вход</p>
         <input
           type="text"
           {...register("username")}
-          className="auth-form-input"
+          className="form-input"
           placeholder="Имя пользователя"
         />
-        <div className="relative">
+        <div className="relative w-full">
           <input
             type={passwordVisible ? "text" : "password"}
             {...register("password")}
-            className="auth-form-input pr-9"
+            className="form-input pr-9"
             placeholder="Пароль"
           />
           <img
             src={eye}
             alt="password_visibility"
-            className={`absolute top-[9px] right-4 p-2.5 cursor-pointer rounded-[20px] ${passwordVisible ? "fill-white bg-primary" : ""}`}
+            className={`absolute right-4 top-[9px] cursor-pointer rounded-[20px] p-2.5 ${passwordVisible ? "bg-primary fill-white" : ""}`}
             onClick={() => setPasswordVisible(!passwordVisible)}
           />
         </div>
         <button
           type="submit"
-          className="p-4 rounded-[40px] w-[400px] bg-primary text-white font-semibold hover:bg-hard-primary transition-colors duration-300"
+          className="w-[400px] rounded-[44px] bg-primary p-4 font-semibold text-white transition-colors duration-200 hover:bg-hard-primary"
         >
           Войти
         </button>
-        <p className="text-center text-gray-600 mt-4">
+        <p className="mt-4 text-center text-gray-600">
           Нет аккаунта?{" "}
           <span
-            className="font-medium text-gray-900 underline-hover cursor-pointer"
+            className="underline-hover cursor-pointer font-medium text-gray-900"
             onClick={openRegisterModal}
           >
             Зарегистрироваться
@@ -74,3 +74,5 @@ export const LoginForm: FC<ILoginForm> = ({
     </Modal>
   );
 };
+
+export default LoginForm;

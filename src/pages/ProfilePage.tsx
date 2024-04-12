@@ -1,20 +1,21 @@
-// import { useAppSelector } from "../redux/store.ts";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FC } from "react";
-import dashboardIcon from "../assets/icons/dashboard.svg";
-import orderHistoryIcon from "../assets/icons/order_history.svg";
-import heartIcon from "../assets/icons/heart.svg";
-import logoutIcon from "../assets/icons/logout.svg";
 import { useAppDispatch } from "../redux/store.ts";
 import { logoutUser } from "../redux/slices/userSlice.ts";
+import { IoBagOutline } from "react-icons/io5";
+import { MdDashboard, MdOutlineSettings } from "react-icons/md";
+import { AiOutlineHistory } from "react-icons/ai";
+import { LuHeart } from "react-icons/lu";
+import { TbLogout } from "react-icons/tb";
+import { IconType } from "react-icons";
 
 interface FieldProps {
   to: string;
   name: string;
-  icon: string;
+  icon: IconType;
 }
 
-const ProfileNavbarField: FC<FieldProps> = ({ to, name, icon }) => {
+const ProfileNavbarField: FC<FieldProps> = ({ to, name, icon: Icon }) => {
   const location = useLocation();
 
   return (
@@ -22,14 +23,13 @@ const ProfileNavbarField: FC<FieldProps> = ({ to, name, icon }) => {
       to={to}
       className={
         location.pathname === to
-          ? "border-l-[3px] border-primary ml-[-3px] flex px-5 py-4 gap-x-2.5 text-black bg-gray-100"
-          : "flex px-5 py-4 text-gray-600 gap-x-2.5 hover:bg-gray-100 transition-colors duration-200"
+          ? "relative flex items-center  gap-x-2.5 border-primary bg-gray-100 px-5 py-4 text-black before:absolute before:left-0 before:top-0 before:h-full before:w-[3px] before:bg-primary before:content-['']"
+          : "flex gap-x-2.5 px-5 py-4 text-gray-600 transition-colors duration-200 hover:bg-gray-100"
       }
     >
-      <img
-        src={icon}
-        alt=""
-        className={`filter ${location.pathname === to ? "brightness-0" : "brightness-100"}`}
+      <Icon
+        size={24}
+        className={`${location.pathname === to ? "text-black" : "text-gray-600"}`}
       />
       <span>{name}</span>
     </Link>
@@ -37,34 +37,43 @@ const ProfileNavbarField: FC<FieldProps> = ({ to, name, icon }) => {
 };
 
 const ProfilePage = () => {
-  // const user = useAppSelector((state) => state.user.data);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   return (
-    <div className="container flex gap-x-6">
-      <section className="flex flex-col w-[300px] border-1 rounded-md py-4">
-        <p className="text-xl font-semibold pl-5 pb-4">Профиль</p>
+    <div className="container mb-20 flex gap-x-6">
+      <section className="flex h-fit w-[300px] flex-col rounded-md border-1 py-4">
+        <p className="pb-4 pl-5 text-xl font-medium">Профиль</p>
         <ProfileNavbarField
           to="/profile/dashboard"
           name="Личный кабинет"
-          icon={dashboardIcon}
+          icon={MdDashboard}
         />
         <ProfileNavbarField
-          to="/profile/order-history"
+          to="/profile/orders"
           name="История заказов"
-          icon={orderHistoryIcon}
+          icon={AiOutlineHistory}
         />
         <ProfileNavbarField
           to="/profile/wishlist"
           name="Список желаемого"
-          icon={heartIcon}
+          icon={LuHeart}
+        />
+        <ProfileNavbarField
+          to="/profile/cart"
+          name="Корзина"
+          icon={IoBagOutline}
+        />
+        <ProfileNavbarField
+          to="/profile/settings"
+          name="Настройки"
+          icon={MdOutlineSettings}
         />
         <div
-          className="flex px-5 py-4  text-red-500 gap-x-2.5 cursor-pointer hover:bg-red-50 active:bg-red-100"
+          className="flex cursor-pointer gap-x-2.5  px-5 py-4 text-red-500 transition-colors duration-200 hover:bg-red-50 active:bg-red-100"
           onClick={() => dispatch(logoutUser()).then(() => navigate("/"))}
         >
-          <img src={logoutIcon} alt="logout icon" />
+          <TbLogout size={24} />
           <span>Выйти из аккаунта</span>
         </div>
       </section>
