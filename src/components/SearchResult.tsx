@@ -1,9 +1,9 @@
-import { Product } from "../types.ts";
 import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import { getImage } from "../firebase.ts";
 import ProductStatus from "./UI/ProductStatus.tsx";
+import { Product } from "../types/product.ts";
 
 interface ISearchResult {
   result: Product;

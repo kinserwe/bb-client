@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useEffect } from "react";
@@ -12,9 +12,15 @@ import Footer from "./components/Footer.tsx";
 function App() {
   const dispatch = useAppDispatch();
 
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   useEffect(() => {
     dispatch(fetchProfile());
-  });
+  }, [dispatch]);
 
   return (
     <>

@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import Modal from "../UI/Modal.tsx";
 import { useForm } from "react-hook-form";
-import { RegisterData } from "../../types.ts";
 import { useAppDispatch } from "../../redux/store.ts";
 import { registerUser } from "../../redux/slices/userSlice.ts";
 import { toast } from "react-toastify";
+import { RegisterData } from "../../types/auth.ts";
 
 interface IRegisterForm {
   isOpen: boolean;

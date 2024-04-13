@@ -1,17 +1,22 @@
-import { Product } from "../types.ts";
 import { FC, useEffect, useState } from "react";
 import { getImage } from "../firebase.ts";
 import { Link } from "react-router-dom";
 import ProductStatus from "./UI/ProductStatus.tsx";
 import Rating from "./UI/Rating.tsx";
 import green_heart from "../assets/icons/green_heart.svg";
+import { useAppDispatch, useAppSelector } from "../redux/store.ts";
+import { addToOrder } from "../redux/slices/orderSlice.ts";
+import { Product } from "../types/product.ts";
 
 interface IProductCard {
   product: Product;
 }
 
 const ProductCard: FC<IProductCard> = ({ product }) => {
+  const dispatch = useAppDispatch();
+  const orderId = useAppSelector((state) => state.user.data?.order);
   const [image, setImage] = useState<string>();
+  const [amount] = useState<number>(1);
 
   useEffect(() => {
     getImage(`products/${product.id}`).then((image) => setImage(image));
@@ -50,9 +55,23 @@ const ProductCard: FC<IProductCard> = ({ product }) => {
       <div className="flex w-[240px] flex-col gap-y-3">
         <p className="text-lg font-semibold">{product.price} руб.</p>
         <div className="flex items-center gap-x-3">
-          <button className="flex-1 rounded-md bg-primary px-5 py-2.5 text-white transition-colors duration-200 hover:bg-hard-primary">
-            В корзину
-          </button>
+          {orderId && (
+            <button
+              className="flex-1 rounded-md bg-primary px-5 py-2.5 text-white transition-colors duration-200 hover:bg-hard-primary"
+              onClick={() =>
+                dispatch(
+                  addToOrder({
+                    orderId: orderId,
+                    productId: product.id,
+                    quantity: amount,
+                  }),
+                )
+              }
+            >
+              В корзину
+            </button>
+          )}
+
           <button className="flex h-[44px] w-[44px] items-center justify-center rounded-[50%] bg-[#20B256]/20 transition-colors duration-200 hover:bg-[#20B256]/40">
             <img src={green_heart} alt="" className="h-5 w-5" />
           </button>

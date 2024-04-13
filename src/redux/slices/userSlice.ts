@@ -1,5 +1,6 @@
-import { LoginCredentials, RegisterData, User } from "../../types.ts";
+import { User } from "../../types/user.ts";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { LoginCredentials, RegisterData } from "../../types/auth.ts";
 import apiClient from "../../axios.ts";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";

@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 import Modal from "../UI/Modal.tsx";
 import { useForm } from "react-hook-form";
-import { LoginCredentials } from "../../types.ts";
 import { useAppDispatch } from "../../redux/store.ts";
 import { loginUser } from "../../redux/slices/userSlice.ts";
 import eye from "../../assets/icons/eye.svg";
+import { LoginCredentials } from "../../types/auth.ts";
 
 interface ILoginForm {
   isOpen: boolean;

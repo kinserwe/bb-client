@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from "../redux/store.ts";
 import { useForm } from "react-hook-form";
-import { User } from "../types.ts";
 import React, { useEffect, useState } from "react";
 import { getImage, uploadImage } from "../firebase.ts";
 import defaultUserImage from "../assets/images/default_user.png";
 import { toast } from "react-toastify";
 import { updateUser } from "../redux/slices/userSlice.ts";
+import { User } from "../types/user.ts";
 
 const ProfileSettings = () => {
   const dispatch = useAppDispatch();

@@ -1,10 +1,12 @@
 import searchIcon from "../assets/icons/search.svg";
 import SearchResults from "./SearchResults.tsx";
 import React, { useEffect, useState } from "react";
-import { PaginatedResponse, Product } from "../types.ts";
+
 import apiClient from "../axios.ts";
 import { debounce } from "lodash";
 import { useLocation } from "react-router-dom";
+import { PaginatedResponse } from "../types/api.ts";
+import { Product } from "../types/product.ts";
 
 const Searchbar = () => {
   const [resultOpen, setResultOpen] = useState<boolean>(false);

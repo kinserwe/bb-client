@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getImage } from "../firebase.ts";
 import { Link, useParams } from "react-router-dom";
-import { PaginatedResponse, Product, Review } from "../types.ts";
 import apiClient from "../axios.ts";
 import ProductStatus from "../components/UI/ProductStatus.tsx";
 import Loader from "../components/Loader.tsx";
@@ -11,6 +10,8 @@ import defaultUser from "../assets/images/default_user.png";
 import Tabs, { Tab } from "../components/UI/Tabs.tsx";
 import Rating from "../components/UI/Rating.tsx";
 import ReviewList from "../components/ReviewList.tsx";
+import { Product, Review } from "../types/product.ts";
+import { PaginatedResponse } from "../types/api.ts";
 
 export const ProductPage = () => {
   const { productId } = useParams();

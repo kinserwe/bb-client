@@ -3,7 +3,7 @@ import { UisAngleRight } from "@iconscout/react-unicons-solid";
 import home from "../assets/icons/home.svg";
 import { useEffect, useState } from "react";
 import apiClient from "../axios.ts";
-import { Product } from "../types.ts";
+import { Product } from "../types/product.ts";
 
 type RouteKey = keyof typeof routeMapping;
 

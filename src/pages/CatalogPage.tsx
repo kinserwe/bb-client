@@ -88,10 +88,11 @@ const CatalogPage = () => {
     document.title =
       (subcategoryName ? subcategoryName : categoryName || "Каталог") +
       " \u2022 BotanicBasket";
-    categoryName &&
-      setParams((prevParams) => ({ ...prevParams, category: categoryName }));
-    subcategoryName &&
+    if (subcategoryName) {
       setParams((prevParams) => ({ ...prevParams, category: subcategoryName }));
+    } else if (categoryName) {
+      setParams((prevParams) => ({ ...prevParams, category: categoryName }));
+    }
   }, [categoryName, subcategoryName]);
 
   return (

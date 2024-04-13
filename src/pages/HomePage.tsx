@@ -1,9 +1,9 @@
 import Gallery from "../components/Gallery.tsx";
 import Featured from "../components/Featured.tsx";
 import { useEffect, useState } from "react";
-import { Review } from "../types.ts";
 import apiClient from "../axios.ts";
 import ReviewCard from "../components/ReviewCard.tsx";
+import { Review } from "../types/product.ts";
 
 const HomePage = () => {
   const [latestReviews, setLatestReviews] = useState<Review[]>();

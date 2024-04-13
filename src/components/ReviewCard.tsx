@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Review } from "../types.ts";
+import { Review } from "../types/product.ts";
 import quote from "../assets/icons/quote.svg";
 import { Link } from "react-router-dom";
 import defaultUserImage from "../assets/images/default_user.png";

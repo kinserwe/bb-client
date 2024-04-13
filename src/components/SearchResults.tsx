@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Product } from "../types.ts";
 import SearchResult from "./SearchResult.tsx";
+import { Product } from "../types/product.ts";
 
 interface ISearchResult {
   results: Product[];
